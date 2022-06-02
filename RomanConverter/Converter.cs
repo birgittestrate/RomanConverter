@@ -2,21 +2,21 @@
 {
     public class Converter
     {
-        public Roman roman;
+        private readonly Roman _roman;
 
         public Converter()
         {
-            roman = new Roman();
+            _roman = new Roman();
         }
 
         public string IntToRoman(int intNumber)
         {
-            string romanNumber = "";
-            foreach (var romanItem in roman.Numerals)
+            var romanNumber = "";
+            foreach (var (key, value) in _roman.Numerals)
             {
-                if (intNumber >= romanItem.Key)
+                if (intNumber >= key)
                 {
-                    romanNumber = romanItem.Value + IntToRoman(intNumber - romanItem.Key);
+                    romanNumber = value + IntToRoman(intNumber - key);
                     break;
                 }                 
             }            
@@ -25,14 +25,14 @@
 
         public int RomanToInt(string romanNumber)
         {
-            foreach (var romanItem in roman.Numerals)          
+            foreach (var (key, value) in _roman.Numerals)          
             {
-                if (romanItem.Value.Length == 1)
+                if (value.Length == 1)
                 {
-                    int romanIdx = romanNumber.IndexOf(romanItem.Value);
+                    var romanIdx = romanNumber.IndexOf(value, StringComparison.InvariantCulture);
                     if (romanIdx > -1)
                         return RomanToInt(romanNumber.Substring(romanIdx + 1)) +
-                               (romanIdx > 0 ? romanItem.Key - RomanToInt(romanNumber.Substring(0, romanIdx)): romanItem.Key);
+                               (romanIdx > 0 ? key - RomanToInt(romanNumber.Substring(0, romanIdx)): key);
                 }                
             }
             return 0;

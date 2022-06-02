@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RomanConverter
+﻿namespace RomanConverter
 {
     public class Roman
     {
