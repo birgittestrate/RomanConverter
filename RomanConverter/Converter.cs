@@ -2,17 +2,17 @@
 {
     public class Converter
     {
-        private readonly Roman _roman;
-
-        public Converter()
+        private readonly Dictionary<int, string> _numerals = new()
         {
-            _roman = new Roman();
-        }
-
+            { 1000, "M" }, { 900, "CM" }, { 500, "D" }, { 400, "CD" },
+            { 100, "C" }, { 90, "XC" }, { 50, "L" }, { 40, "XL" },
+            { 10, "X" }, { 9, "IX" }, { 5, "V" }, { 4, "IV" }, { 1, "I" }
+        };
+        
         public string IntToRoman(int intNumber)
         {
             var romanNumber = "";
-            foreach (var (key, value) in _roman.Numerals)
+            foreach (var (key, value) in _numerals)
             {
                 if (intNumber < key) continue;
                 romanNumber = value + IntToRoman(intNumber - key);
@@ -23,7 +23,7 @@
 
         public int RomanToInt(string romanNumber)
         {
-            foreach (var (key, value) in _roman.Numerals)
+            foreach (var (key, value) in _numerals)
             {
                 if (value.Length != 1) continue;
                 var romanIdx = romanNumber.IndexOf(value, StringComparison.InvariantCulture);

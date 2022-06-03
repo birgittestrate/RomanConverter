@@ -20,7 +20,7 @@ namespace RomanConverter.Tests.Unit
         };
 
         [TestMethod]
-        public void ValidateIntToRoman()
+        public void TestIntToRoman()
         {
             foreach (var (key, value) in IntToRomanTestValues)
             {
@@ -34,7 +34,7 @@ namespace RomanConverter.Tests.Unit
         }
         
         [TestMethod]
-        public void ValidateRomanToInt()
+        public void TestRomanToInt()
         {
             foreach (var (key, value) in RomanToIntTestValues)
             {
