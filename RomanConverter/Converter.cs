@@ -14,26 +14,22 @@
             var romanNumber = "";
             foreach (var (key, value) in _roman.Numerals)
             {
-                if (intNumber >= key)
-                {
-                    romanNumber = value + IntToRoman(intNumber - key);
-                    break;
-                }                 
+                if (intNumber < key) continue;
+                romanNumber = value + IntToRoman(intNumber - key);
+                break;
             }            
             return romanNumber;
         }
 
         public int RomanToInt(string romanNumber)
         {
-            foreach (var (key, value) in _roman.Numerals)          
+            foreach (var (key, value) in _roman.Numerals)
             {
-                if (value.Length == 1)
-                {
-                    var romanIdx = romanNumber.IndexOf(value, StringComparison.InvariantCulture);
-                    if (romanIdx > -1)
-                        return RomanToInt(romanNumber.Substring(romanIdx + 1)) +
-                               (romanIdx > 0 ? key - RomanToInt(romanNumber.Substring(0, romanIdx)): key);
-                }                
+                if (value.Length != 1) continue;
+                var romanIdx = romanNumber.IndexOf(value, StringComparison.InvariantCulture);
+                if (romanIdx > -1)
+                    return RomanToInt(romanNumber[(romanIdx + 1)..]) +
+                           (romanIdx > 0 ? key - RomanToInt(romanNumber[..romanIdx]): key);
             }
             return 0;
         } 
