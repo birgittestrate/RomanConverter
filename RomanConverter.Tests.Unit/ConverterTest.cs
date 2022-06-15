@@ -1,50 +1,38 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RomanConverter.Tests.Unit
 {
     [TestClass]
     public class ConverterTest
     {
-        public Dictionary<int, string> IntToRomanTestValues = new()
-        {
-            { 1999,"MCMXCIX"},
-            { 2444,"MMCDXLIV"},
-            { 90,"XC"}
-        };
-        public Dictionary<string, int> RomanToIntTestValues = new()
-        {
-            { "MCMXCIX",1999},
-            { "MMCDXLIV",2444},            
-            { "XC",90}
-        };
+        [DataRow(1999, "MCMXCIX")]
+        [DataRow(2444, "MMCDXLIV")]
+        [DataRow(90, "XC")]
 
-        [TestMethod]
-        public void TestIntToRoman()
+        [DataTestMethod]
+        public void TestIntegerToRoman(int inputInteger, string expectedRoman)
         {
-            foreach (var (key, value) in IntToRomanTestValues)
-            {
-                //Arrange
-                var convert = new Converter();
-                //Act
-                var actualValue = convert.IntToRoman(key);
-                //Assert
-                Assert.AreEqual(value, actualValue, "The integer " + key + " was not converted correctly to roman");
-            }
+            //Arrange
+            var convert = new Converter();
+            //Act
+            var actualRoman = convert.IntegerToRoman(inputInteger);
+            //Assert
+            Assert.AreEqual(expectedRoman, actualRoman, "The integer " + inputInteger + " was not converted correctly to roman");
         }
-        
-        [TestMethod]
-        public void TestRomanToInt()
+
+        [DataRow("MCMXCIX", 1999)]
+        [DataRow("MMCDXLIV", 2444)]
+        [DataRow("XC", 90)]
+
+        [DataTestMethod]
+        public void TestRomanToInteger(string inputRoman, int expectedInteger)
         {
-            foreach (var (key, value) in RomanToIntTestValues)
-            {
-                //Arrange
-                var convert = new Converter();
-                //Act
-                var actualValue = convert.RomanToInt(key);
-                //Assert
-                Assert.AreEqual(value, actualValue, "The roman " + key + " was not converted correctly to integer");
-            }
+            //Arrange
+            var convert = new Converter();
+            //Act
+            var actualInteger = convert.RomanToInteger(inputRoman);
+            //Assert
+            Assert.AreEqual(expectedInteger, actualInteger, "The roman " + inputRoman + " was not converted correctly to integer");
         }
     }
 }
