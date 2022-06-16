@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RomanConverter.Tests.Unit
 {
@@ -8,6 +9,8 @@ namespace RomanConverter.Tests.Unit
         [DataRow(1999, "MCMXCIX")]
         [DataRow(2444, "MMCDXLIV")]
         [DataRow(90, "XC")]
+        [DataRow(0, "")]
+        [DataRow(-1, "")]
 
         [DataTestMethod]
         public void TestIntegerToRoman(int inputInteger, string expectedRoman)
@@ -15,24 +18,38 @@ namespace RomanConverter.Tests.Unit
             //Arrange
             var convert = new Converter();
             //Act
-            var actualRoman = convert.IntegerToRoman(inputInteger);
+            string actualRoman = convert.IntegerToRoman(inputInteger);
             //Assert
-            Assert.AreEqual(expectedRoman, actualRoman, "The integer " + inputInteger + " was not converted correctly to roman");
+            Assert.AreEqual(expectedRoman, actualRoman);
         }
-
+        
         [DataRow("MCMXCIX", 1999)]
         [DataRow("MMCDXLIV", 2444)]
         [DataRow("XC", 90)]
+        [DataRow("", 0)]
 
         [DataTestMethod]
-        public void TestRomanToInteger(string inputRoman, int expectedInteger)
+        public void TestRomanToInteger_ValidValues(string inputRoman, int expectedInteger)
         {
             //Arrange
             var convert = new Converter();
             //Act
             var actualInteger = convert.RomanToInteger(inputRoman);
             //Assert
-            Assert.AreEqual(expectedInteger, actualInteger, "The roman " + inputRoman + " was not converted correctly to integer");
+            Assert.AreEqual(expectedInteger, actualInteger);
+        }
+
+        [DataRow("AMCDXLIV")]
+        [DataRow("MCM CIX")]
+
+        [DataTestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRomanToInteger_InValidValues(string inputRoman)
+        {
+            //arrange
+            var convert = new Converter();
+            //Act
+            _= convert.RomanToInteger(inputRoman);
         }
     }
 }
