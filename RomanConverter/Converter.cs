@@ -16,7 +16,10 @@
             var romanNumber = "";
             foreach (var (key, value) in _integerToRomanDictionary)
             {
-                if (intNumber < key) continue;
+                if (intNumber < key)
+                {
+                    continue;
+                }
                 romanNumber = value + IntegerToRoman(intNumber - key);
                 break;
             }
@@ -34,11 +37,16 @@
 
             foreach (var (key, value) in _integerToRomanDictionary)
             {
-                if (value.Length != 1) continue;
+                if (value.Length != 1)
+                {
+                    continue;
+                }
                 var romanIdx = romanNumber.IndexOf(value, StringComparison.InvariantCulture);
                 if (romanIdx >= 0)
+                {
                     return RomanToInteger(romanNumber[(romanIdx + 1)..]) +
                            (romanIdx > 0 ? key - RomanToInteger(romanNumber[..romanIdx]) : key);
+                }
             }
             return 0;
         } 

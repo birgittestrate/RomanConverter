@@ -41,6 +41,7 @@ namespace RomanConverter.Tests.Unit
 
         [DataRow("AMCDXLIV")]
         [DataRow("MCM CIX")]
+        [DataRow("MCMCIX-")]
 
         [DataTestMethod]
         [ExpectedException(typeof(ArgumentException))]
